@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   try {
     const res = await fetch("http://localhost:8081/tweets", {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem(
+        "Authorization": `Bearer ${localStorage.getItem(
           "TWITTER_LITE_ACCESS_TOKEN"
         )}`
       }
@@ -14,11 +14,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     const { tweets } = await res.json();
+    const { message, user: { username } } = tweets;
 
     const tweetsContainer = document.querySelector("#tweets-container");
     const tweetsHtml = tweets.map(
       ({ message }) => `
       <div class="card">
+        <div class="card-header">${username}</div>
         <div class="card-body">
           <p class="card-text">${message}</p>
         </div>
